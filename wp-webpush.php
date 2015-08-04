@@ -131,7 +131,7 @@ function webpush_manifest() {
 }
 
 function webpush_serviceworker() {
-    $sw_filename = plugin_dir_path( __FILE__ ) . ('js/service_worker.js');
+    $sw_filename = plugin_dir_path(__FILE__) . 'js/service_worker.js';
     if (file_exists($sw_filename)) {
         return file_get_contents($sw_filename);
     }
