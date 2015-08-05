@@ -1,4 +1,5 @@
 self.addEventListener('push', function(event) {
+    console.log('Notification received', event);
 });
 
 self.addEventListener('notificationclick', function(event) {

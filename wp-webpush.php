@@ -41,7 +41,7 @@ function webpush_menu() {
         add_submenu_page('webpush_options', 'WebPush Stats', 'Statistics', 'manage_options', 'webpush_stats', 'webpush_submenu_stats');
 }
 
-function sanatorium_main_options() {
+function webpush_main_options() {
         if (!current_user_can('manage_options'))    {
                 wp_die( __('You do not have sufficient permissions to access this page.') );
         }
@@ -78,10 +78,12 @@ function webpush_init()
     add_action('admin_menu', 'webpush_menu');
     add_action('admin_head', 'webpush_admin_css');
 
-    wp_enqueue_script('webpush-script',
-        plugins_url('/js/webpush.js', __FILE__ ),
-        array('jquery')
-    );
+    if (!is_admin()) {
+        wp_enqueue_script('webpush-script',
+            plugins_url('/js/webpush.js', __FILE__ ),
+            array('jquery')
+        );
+    }
 }
 
 function webpush_parse_request(&$wp) {
@@ -101,7 +103,7 @@ function webpush_handle_request($q) {
             echo webpush_serviceworker();
             break;
         case 'subscribe':
-            echo webpush_serviceworker($q);
+            echo webpush_subscribe($q);
             break;
         case 'notifications':
             echo webpush_notifications($q);
@@ -138,9 +140,12 @@ function webpush_serviceworker() {
     return '';
 }
 
-function webpush_notifications($q) {
+function webpush_subscribe($q) {
+    echo json_encode($q);
 }
 
+function webpush_notifications($q) {
+}
 
 function webpush_register_widgets()
 {
