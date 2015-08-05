@@ -16,6 +16,7 @@ if (!function_exists('add_action')) exit;
 require_once dirname( __FILE__ ) . '/webpushWidget.class.php';
 
 add_action('init', 'webpush_init');
+add_action('widgets_init', 'webpush_register_widgets');
 
 function webpush_admin_css() {
     ?><style>
@@ -74,7 +75,6 @@ function webpush_init()
     add_rewrite_tag('%webpush_handler%', '([^/]+)');
     add_action('wp_head', 'webpush_head');
     add_action('parse_request', 'webpush_parse_request');
-    add_action('widgets_init', 'webpush_register_widgets');
     add_action('admin_menu', 'webpush_menu');
     add_action('admin_head', 'webpush_admin_css');
 
